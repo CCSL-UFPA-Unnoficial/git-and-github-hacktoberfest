@@ -5,9 +5,12 @@ import ejs from 'ejs'
 const contributorsFolder = path.join(__dirname, '../contributors')
 const templateFile = path.join(__dirname, '../templates/main.ejs')
 const template = fs.readFileSync(templateFile, 'utf8')
+const templateOutputPath = path.join(__dirname, '../templates/index.html')
 
 export default function main () {
-  console.log('todo')
+  const contributors = getValidContributors(contributorsFolder)
+  const rendered = renderTemplate(contributors)
+  return writeFile(rendered)
 }
 
 export function getAllFileNames (folder) {
@@ -63,4 +66,12 @@ export function getValidContributors (folder) {
 
 export function renderTemplate (users) {
   return ejs.render(template, { users })
+}
+
+export function writeFile (rendered) {
+  return fs.writeFileSync(templateOutputPath, rendered, 'utf8')
+}
+
+if (require.main === module) {
+  main()
 }
