@@ -3,8 +3,10 @@ import path from 'path'
 
 import {
   getAllFileNames,
-  getAllContributors,
-  parseContributor
+  getAllContributorsData,
+  parseContributor,
+  getValidContributors,
+  renderTemplate
 } from '..'
 
 const contributorsFolder = path.join(__dirname, './fixtures/contributors')
@@ -20,8 +22,8 @@ test('getAllFileNames', () => {
   expect(got).toEqual(expected)
 })
 
-test('getAllContributors', () => {
-  const got = getAllContributors(contributorsFolder)
+test('getAllContributorsData', () => {
+  const got = getAllContributorsData(contributorsFolder)
   expect(got.length).toBe(3)
 })
 
@@ -103,4 +105,38 @@ test('parseContributor valid', () => {
     message: 'Hello World'
   }
   expect(got).toEqual(expected)
+})
+
+test('getValidContributors', () => {
+  const got = getValidContributors(contributorsFolder)
+  const expected = [
+    {
+      name: 'Foo',
+      username: 'foo',
+      message: 'Lorem Ipsum'
+    },
+    {
+      name: 'Bar',
+      username: 'bar',
+      message: 'Lorem Ipsum'
+    },
+    {
+      name: 'Baz',
+      username: 'baz',
+      message: 'Lorem Ipsum'
+    }
+  ]
+  expect(got).toEqual(expected)
+})
+
+test('renderTemplate', () => {
+  const contributors = getValidContributors(contributorsFolder)
+
+  const got = renderTemplate(contributors)
+
+  for (let contributor of contributors) {
+    expect(got).toEqual(expect.stringMatching(contributor.name))
+    expect(got).toEqual(expect.stringMatching(contributor.username))
+    expect(got).toEqual(expect.stringMatching(contributor.message))
+  }
 })

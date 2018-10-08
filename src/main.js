@@ -1,7 +1,10 @@
 import path from 'path'
 import fs from 'fs'
+import ejs from 'ejs'
 
 const contributorsFolder = path.join(__dirname, '../contributors')
+const templateFile = path.join(__dirname, '../templates/main.ejs')
+const template = fs.readFileSync(templateFile, 'utf8')
 
 export default function main () {
   console.log('todo')
@@ -11,11 +14,14 @@ export function getAllFileNames (folder) {
   return fs.readdirSync(folder)
 }
 
-export function getAllContributors (folder = contributorsFolder) {
+export function getAllContributorsData (folder = contributorsFolder) {
   return getAllFileNames(folder)
     .filter(name => name !== '.gitkeep')
     .map(filename => path.join(folder, filename))
-    .map(fullPath => fs.readFileSync(fullPath, 'utf8'))
+    .map(fullPath => ({
+      fullPath,
+      data: fs.readFileSync(fullPath, 'utf8')
+    }))
 }
 
 export function parseContributor (fullPath, rawContributor) {
@@ -44,8 +50,17 @@ export function parseContributor (fullPath, rawContributor) {
   }
 
   return {
-    name, 
-    username: username.slice(1),  // remove @
+    name,
+    username: username.slice(1), // remove @
     message
   }
+}
+
+export function getValidContributors (folder) {
+  return getAllContributorsData(folder)
+    .map(({ fullPath, data }) => parseContributor(fullPath, data))
+}
+
+export function renderTemplate (users) {
+  return ejs.render(template, { users })
 }
