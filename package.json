@@ -28,7 +28,7 @@
     "dev": "rollup -c -w",
     "test": "npm run lint && jest",
     "pretest": "npm run build",
-    "lint": "eslint src/* test/* rollup.config.js",
+    "lint": "eslint src/**/*.js test/**/*.js rollup.config.js",
     "deploy": "npm run build && node dist/main.cjs.js && gh-pages -d templates"
   },
   "files": [
