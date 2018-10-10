@@ -1,6 +1,9 @@
 language: node_js
 node_js:
   - '9'
+script:
+  - yarn build
+  - node dist/main.cjs.js
 deploy:
   local-dir: templates
   provider: pages
