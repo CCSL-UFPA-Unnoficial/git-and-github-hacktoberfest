@@ -1,3 +1,10 @@
 language: node_js
 node_js:
   - '9'
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  keep-history: true
+  on:
+    branch: master
