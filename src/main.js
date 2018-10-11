@@ -4,7 +4,7 @@ import ejs from 'ejs'
 
 const contributorsFolder = path.join(__dirname, '../contributors')
 const templateFile = path.join(__dirname, '../templates/main.ejs')
-const template = fs.readFileSync(templateFile, 'utf8')
+const template = fs.readFileSync(templateFile, 'utf-8')
 const templateOutputPath = path.join(__dirname, '../templates/index.html')
 
 export default function main () {
