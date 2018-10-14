@@ -35,7 +35,11 @@ export function parseContributor (fullPath, rawContributor) {
   const lines = rawContributor.split('\n')
 
   if (lines.length !== 3) {
-    throw new Error(`Contributor ${fullPath} should have 3 lines. Has ${lines.length}`)
+    if (lines.length === 4 && lines[3].length === 0){
+      lines.pop()
+    }else{
+      throw new Error(`Contributor ${fullPath} should have 3 lines. Has ${lines.length}`)
+    }
   }
 
   if (lines.some(line => !line.length)) {
