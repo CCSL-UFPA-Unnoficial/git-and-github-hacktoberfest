@@ -197,8 +197,16 @@
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script>
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]]; // eslint-disable-line no-param-reassign
+                }
+            }
         var users = `[{"name":"Lakshamana","username":"Lakshamana","message":"Novo na área!"},{"name":"Leonardo Christian","username":"leochrisis","message":"Ohayo mina!"},{"name":"Lubien","username":"lubien","message":"Hello World"},{"name":"Leonardo","username":"lvarau","message":"HEY HEY HEY !"},{"name":"Lucas Souza","username":"souzaluuk","message":"Minha contribuição. Yeah!"}]`
         users = JSON.parse(users)
+        shuffleArray(users)
+        
     </script>
     <script src="main.js"></script>
 
