@@ -54,6 +54,37 @@ test('parseContributor wrong line count', () => {
   expect(got).toThrowError(/should have 3 lines/)
 })
 
+test('parseContributor fourth line invalid', () => {
+  const fakePath = '/path/'
+  const contributor = [
+    'Lucas Souza',
+    '@souzaluuk',
+    'My message',
+    'Fourth line'
+  ].join('\n')
+
+  const got = () => parseContributor(fakePath, contributor)
+  expect(got).toThrowError(/should have 3 lines/)
+})
+
+test('parseContributor fourth line valid', () => {
+  const fakePath = '/path/'
+  const contributor = [
+    'Lucas Souza',
+    '@souzaluuk',
+    'Hello World',
+    ''
+  ].join('\n')
+
+  const got = parseContributor(fakePath, contributor)
+  const expected = {
+    name: 'Lucas Souza',
+    username: 'souzaluuk',
+    message: 'Hello World'
+  }
+  expect(got).toEqual(expected)
+})
+
 test('parseContributor empty lines', () => {
   const fakePath = '/path/'
   const contributor = [
